@@ -1,0 +1,6 @@
+{
+  "appId": "com.profitmaster.app",
+  "appName": "profit-master",
+  "webDir": "out",
+  "bundledWebRuntime": false
+}
