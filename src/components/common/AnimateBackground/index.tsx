@@ -4,11 +4,22 @@ import { Fire } from "./icons/Fire";
 import { HandsGood } from "./icons/HandsGood";
 import { Safe } from "./icons/Safe";
 
-export const AnimateBacground = () => {
+export const AnimateBackground = () => {
   const row = ['', '', '', '', '', '']
   const icons = [Dollar, Fire, HandsGood, Safe]
   const colors = { fill: ['#ee2929', '#1b15c4', '#00e1ce', '#c415b3'] }
   const duration = { duration: 2, repeat: Infinity }
+
+  /* ==> For implementation next refactoring <==
+     const changeOrder = (array: string[]) => {
+    let result: string[] = [];
+    for (let index = 0; index < array.length; index++) {
+      const randomIndex = Math.floor((Math.random() / 2) * 10);
+      const element = array[index];
+      result.splice(randomIndex, 0, element);
+    }
+    return result;
+  }; */
 
   const changeOrder = <T,>(array: T[]): T[] => {
     return array.sort(() => Math.random() - 0.5)
