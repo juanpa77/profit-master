@@ -6,33 +6,39 @@ import { useEffect } from "react"
 import { useAppDispatch, useAppSelector } from "../../modules/user/useAuth"
 import { NextOrObserver, User } from "firebase/auth"
 import { setActiveUser } from "../../modules/user/userSlice"
-import { signWithGoogle } from "../../services/firebase/authProvider"
+import { observerAuth, signWithGoogle } from "../../services/firebase/authProvider"
+import { useRouter } from "next/router"
 
 const Login = () => {
   const user = useAppSelector(state => state)
   const dispatch = useAppDispatch()
-  // const navigate = useNavigate()
+  const router = useRouter()
 
   const isAuth: NextOrObserver<User> = user => {
-    dispatch(setActiveUser({
-      loading: true,
-      userInfo: {
-        email: user?.displayName,
-        name: user?.email
-      },
-      userToken: user?.uid
-    }))
+    dispatch(
+      setActiveUser({
+        loading: true,
+        userInfo: {
+          email: user?.displayName,
+          name: user?.email
+        },
+        userToken: user?.uid
+      })
+    )
   }
 
   // add (user)
   const login = () => {
     signWithGoogle()
-    // navigate('/')
   }
-  /* 
-    useEffect(() => {
-      observerAuth(isAuth)
-    }, []) */
+
+  useEffect(() => {
+    user && router.replace('./home')
+  }, [user])
+
+  useEffect(() => {
+    observerAuth(isAuth)
+  }, [login])
 
   return (
     <>

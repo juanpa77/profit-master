@@ -29,4 +29,4 @@ export const signWithGoogle = () => {
 
 // export const signOff = () => auth.signOut()
 
-// export const observerAuth = (callback: NextOrObserver<User>) => onAuthStateChanged(auth, callback)
+export const observerAuth = (callback: NextOrObserver<User>) => onAuthStateChanged(auth, callback)
