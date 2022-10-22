@@ -40,3 +40,6 @@ next-env.d.ts
 # capacitor
 /android
 /ios
+
+# pouchDB
+/profitMaster
