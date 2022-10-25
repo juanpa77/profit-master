@@ -3,5 +3,7 @@ export default {
   title: 'hola mundo',
   available: 'dispondible',
   income: 'ingresos',
-  expense: 'gastos'
+  expense: 'gastos',
+  incomes: 'ingreso',
+  expenses: 'gasto' 
 }
