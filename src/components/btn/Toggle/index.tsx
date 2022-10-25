@@ -1,16 +1,10 @@
-import { useState } from "react"
 import en from "../../../public/locale/en"
 import es from "../../../public/locale/es"
 import { Box, CheckBox, Switch } from "./styled"
+import useToggle, { TransactionType } from "./useToggle"
 
 type Props = {
   locale: string | undefined
-}
-
-type TransactionType = {
-  expenses: string
-  income: string
-
 }
 const spring = {
   type: "spring",
@@ -25,16 +19,13 @@ const positionCheckBox: TransactionType = {
 
 const Toggle = ({ locale }: Props) => {
   const t = locale === 'en' ? en : es
-  const [transactionType, setTransactionType] = useState<keyof TransactionType>('expenses')
-  const setExpense = () => setTransactionType('expenses')
-  const setIncome = () => setTransactionType('income')
-
+  const [handleToggle, transactionType] = useToggle()
   const texColorAnimate = (positionBox: string) => {
     return { color: positionCheckBox[transactionType] === positionBox && '#d740e5' || '#0b0b0b' }
   }
 
   return (
-    <Switch positioncolumncheckbox={positionCheckBox[transactionType]} role='switch'>
+    <Switch role='switch'>
       <CheckBox layout
         role={'checkbox'}
         animate={{ color: '#5e1ca0' }}
@@ -42,13 +33,13 @@ const Toggle = ({ locale }: Props) => {
         positioncolumncheckbox={positionCheckBox[transactionType]}
       />
       <Box
-        onClick={setIncome}
+        onClick={() => handleToggle("income")}
         positioncolumncheckbox="1/2"
         animate={texColorAnimate('1/2')}>
         {t.incomes}
       </Box>
       <Box
-        onClick={setExpense}
+        onClick={() => handleToggle('expenses')}
         positioncolumncheckbox="2/3"
         animate={texColorAnimate('2/3')}>
         {t.expenses}

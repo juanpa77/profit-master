@@ -15,26 +15,10 @@ export const Switch = styled(motion.div)`
   justify-items: center;
   align-items: center;
   cursor: pointer;
-
-  span{
-    grid-row: 1/1;
-    /* width: 100%; */
-    /* height: 100%; */
-    /* color: black */
-  }
-  span:nth-child(2){
-    grid-column: 1/2;
-    /* color: ${({ positioncolumncheckbox }: Props) => positioncolumncheckbox === '1/2' && '#5e1ca0'}; */
-  }
-  span:nth-child(3){
-    grid-column: 2/3;
-  }
   `
 export const Box = styled(motion.div)`
     grid-row: 1/1;
     grid-column: ${({ positioncolumncheckbox }: Props) => positioncolumncheckbox};
-    /* width: 100%; */
-    /* height: 100%; */
     color: black
 `
 
@@ -44,6 +28,5 @@ export const CheckBox = styled(motion.div)`
   grid-column: ${({ positioncolumncheckbox }: Props) => positioncolumncheckbox};
   grid-row: 1/1;
   background-color: white;
-  /* color: black; */
   border-radius: 40px;
 `
