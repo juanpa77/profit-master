@@ -12,7 +12,7 @@ type Props = {
 }
 
 const TransactionForm = ({ locale }: Props) => {
-  const { transaction, handleInputChange } = useTransaction()
+  const { transaction, handleInputChange, sendTransaction } = useTransaction()
   const t = locale === 'en' ? en : es
 
   return (
@@ -45,6 +45,7 @@ const TransactionForm = ({ locale }: Props) => {
         aria-label="description"
       />
       <Submit
+        onClick={sendTransaction}
         aria-label="submit button">
         {t.send}
       </Submit>

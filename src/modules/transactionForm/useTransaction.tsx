@@ -1,6 +1,7 @@
 import { nanoid } from "nanoid"
 import { ChangeEvent, useState } from "react"
 import { Transaction } from "../../global"
+import { addTransaction } from "../../services/pouchDb"
 import { formatDate } from "../../utility/formatData"
 
 type InputChange = ChangeEvent<
@@ -20,7 +21,7 @@ const useTransaction = () => {
     description: ''
   })
 
-  console.log(transaction)
+  // console.log(transaction)
 
   const handleInputChange = (e: InputChange) => {
     setTransaction({
@@ -29,7 +30,13 @@ const useTransaction = () => {
     });
   };
 
-  return { transaction, handleInputChange }
+  const sendTransaction = () => {
+    if (transaction.amount > 0) {
+      addTransaction(transaction)
+    }
+  }
+
+  return { transaction, handleInputChange, sendTransaction }
 }
 
 export default useTransaction
