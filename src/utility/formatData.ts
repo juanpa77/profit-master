@@ -1,8 +1,8 @@
-// new function to fomat day number
-const formatNumberDay = (day: Number) => day < 10 ? `${'0' + day}` : Number
+// new function to format day number
+const formatNumberDay = (day: Number) => day < 10 ? `${'0' + day}` : day
 
 export const formatDate = (date: Date): string => {
-  const formattedDate = `${date.getFullYear()}-0${date.getMonth() + 1
+  const formattedDate = `${date.getFullYear()}-${date.getMonth() + 1
     }-${formatNumberDay(date.getDate())}`;
   return formattedDate;
 };

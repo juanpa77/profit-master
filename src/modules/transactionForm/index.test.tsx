@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { cleanup, render, screen } from "@testing-library/react";
 import { afterEach, beforeEach, describe, it } from "vitest";
 import TransactionForm from ".";
 
@@ -7,7 +7,8 @@ beforeEach(() => {
 })
 
 describe('Transaction Form', () => {
-  it('should render toggle transaction type', () => {
-    // screen.getbye
+  afterEach(cleanup)
+  it('should render content', () => {
+    screen.getByRole('switch')
   })
 })

@@ -4,7 +4,7 @@ import Toggle from ".";
 import { CheckBox } from "./styled";
 import useToggle from "./useToggle";
 
-vi.mock('./useToggle.tsx')
+// vi.mock('./useToggle.tsx')
 
 beforeEach(() => {
   render(<Toggle locale="en" />)
@@ -25,11 +25,15 @@ describe('Toggle btn', () => {
     fireEvent.click(incomeBtn)
     expect(getComputedStyle(switchBox).gridColumn).toEqual('1/2')
   })
-
-  it('should change transaction type when user clicking', async () => {
-    const incomeBtn = screen.getByText('income')
-
-    vi.mocked(useToggle).mockRestore()
-
-  })
-})
+  /* 
+    it('should change transaction type when user clicking', async () => {
+      const incomeBtn = screen.getByText('income')
+      const mock = vi.fn(useToggle)
+      console.log(useToggle)
+      // const handleToggle = vi.fn().mockImplementation(() => {
+      //   handleToggle: vi.fn()
+      // })
+      // vi.mocked(useToggle).mockRestore()
+  
+    }) */
+}) 
