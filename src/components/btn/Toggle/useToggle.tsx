@@ -20,6 +20,6 @@ const useToggle = () => {
     }
     isActive = false
   }
-  return [handleToggle, transactionType] as const
+  return { handleToggle, transactionType }
 }
 export default useToggle 

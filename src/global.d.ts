@@ -7,3 +7,10 @@ interface Transaction {
   category: string
   description: string
 }
+
+export interface Filters {
+  type: string
+  week: string
+  month: string
+  category: string
+}

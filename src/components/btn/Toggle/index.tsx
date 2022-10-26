@@ -19,7 +19,7 @@ const positionCheckBox: TransactionType = {
 
 const Toggle = ({ locale }: Props) => {
   const t = locale === 'en' ? en : es
-  const [handleToggle, transactionType] = useToggle()
+  const { handleToggle, transactionType } = useToggle()
   const texColorAnimate = (positionBox: string) => {
     return { color: positionCheckBox[transactionType] === positionBox && '#d740e5' || '#0b0b0b' }
   }
