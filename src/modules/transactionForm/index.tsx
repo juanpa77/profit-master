@@ -24,12 +24,14 @@ const TransactionForm = ({ locale }: Props) => {
         placeholder="$999"
         onChange={(e) => handleInputChange(e)}
         name="amount"
+        aria-label="amount"
       />
       <DateInput
         type="date"
         defaultValue={transaction.date || formatDate(new Date())}
         onChange={(e) => handleInputChange(e)}
         name="date"
+        aria-label="date"
       />
       <SelectList
         categories={['s/n', 'test', 'testTwo']}
@@ -40,8 +42,12 @@ const TransactionForm = ({ locale }: Props) => {
         placeholder={t.enterADescription}
         onChange={(e) => handleInputChange(e)}
         name="description"
+        aria-label="description"
       />
-      <Submit>{t.send}</Submit>
+      <Submit
+        aria-label="submit button">
+        {t.send}
+      </Submit>
     </>
   )
 }

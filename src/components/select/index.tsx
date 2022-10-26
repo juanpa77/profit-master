@@ -16,6 +16,7 @@ export const SelectList = ({ handleInputChange, defaultCategory, categories }: P
       defaultValue={defaultCategory}
       onChange={(e) => handleInputChange(e)}
       name="category"
+      aria-label="list categories"
     >
       {categories.map(category => {
         return (

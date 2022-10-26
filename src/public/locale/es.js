@@ -7,5 +7,5 @@ export default {
   incomes: 'ingreso',
   expenses: 'gasto',
   enterADescription: 'ingrese una descripción',
-  send: 'send'
+  send: 'enviar'
 }

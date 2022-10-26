@@ -9,6 +9,10 @@ beforeEach(() => {
 describe('Transaction Form', () => {
   afterEach(cleanup)
   it('should render content', () => {
-    screen.getByRole('switch')
+    screen.getByLabelText('amount')
+    screen.getByLabelText('date')
+    screen.getByLabelText('list categories')
+    screen.getByLabelText('description')
+    screen.getByLabelText('submit button')
   })
 })
