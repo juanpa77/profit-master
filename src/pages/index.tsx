@@ -9,6 +9,9 @@ const Home: NextPage = () => {
       <Link href='/login'>
         <span>go to login</span>
       </Link>
+      <Link href='/add-transaction'>
+        <span>go to add-transaction</span>
+      </Link>
     </div>
   )
 }
