@@ -1,7 +1,8 @@
 import { nanoid } from "nanoid"
-import { ChangeEvent, useState } from "react"
+import { ChangeEvent, useEffect, useState } from "react"
 import { Transaction } from "../../global"
 import { addTransaction } from "../../services/pouchDb"
+import { sharingFilter } from "../../services/sharing-filter"
 import { formatDate } from "../../utility/formatData"
 
 type InputChange = ChangeEvent<
@@ -21,7 +22,21 @@ const useTransaction = () => {
     description: ''
   })
 
-  // console.log(transaction)
+  const subscriptionToggle = sharingFilter.getSubject
+  useEffect(() => {
+    let isActive = true
+    subscriptionToggle.subscribe((filters) => {
+      if (isActive) {
+        setTransaction({
+          ...transaction,
+          type: filters.type
+        })
+      }
+    })
+
+    return (() => { isActive = false })
+  }, [])
+  console.log(transaction)
 
   const handleInputChange = (e: InputChange) => {
     setTransaction({
@@ -33,7 +48,19 @@ const useTransaction = () => {
   const sendTransaction = () => {
     if (transaction.amount > 0) {
       addTransaction(transaction)
+      resetTransactionForm()
     }
+  }
+
+  const resetTransactionForm = () => {
+    setTransaction({
+      id: nanoid(10),
+      type: "expense",
+      amount: 0,
+      date: formatDate(new Date()),
+      category: "",
+      description: "",
+    });
   }
 
   return { transaction, handleInputChange, sendTransaction }
