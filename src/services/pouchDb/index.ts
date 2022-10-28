@@ -26,9 +26,14 @@ export interface User {
   }
 }
 
-export interface LocalDB {
+type LocalDB = {
   _id: string
-  transaction: Transaction[]
+  transactions: Transactions
+}
+
+export interface Transactions {
+  expenses: Transaction[]
+  income: Transaction[]
 }
 
 export const createMonthStructure = () => {
@@ -37,19 +42,46 @@ export const createMonthStructure = () => {
   localDb.bulkDocs(monthsId).then(res => console.log(res))
 }
 
+const updateTransactions = (transaction: Transaction, doc?: LocalDB) => {
+  let transactionType
+  // check transaction type and create object with separate transaction types
+  if (doc) {
+    return transaction.type === 'income'
+      ? transactionType = {
+        expenses: [...doc.transactions.expenses],
+        income: [...doc.transactions.income, transaction]
+      }
+      : transactionType = {
+        expenses: [...doc!.transactions.expenses, transaction],
+        income: [...doc!.transactions.income,]
+      }
+  }
+  transaction.type === 'income'
+    ? transactionType = {
+      income: [],
+      expenses: [transaction]
+    }
+    : transactionType = {
+      expenses: [],
+      income: [transaction]
+    }
+  return transactionType
+}
+
 export const addTransaction = (transaction: Transaction) => {
   const id = splitDate(transaction.date).month
   localDb.get<LocalDB>(id)
     .then(doc => {
-      return localDb.put({
+      return localDb.put<LocalDB>({
         _rev: doc._rev,
         _id: id,
-        transaction: [...doc.transaction, transaction]
+        transactions: updateTransactions(transaction, doc)
       })
         .then(res => console.log(res))
     })
-    .catch(() => localDb.put({
+    .catch(() => localDb.put<LocalDB>({
       _id: id,
-      transaction: [transaction]
+      transactions: updateTransactions(transaction)
     }))
 }
+
