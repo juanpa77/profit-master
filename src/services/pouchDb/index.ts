@@ -85,3 +85,6 @@ export const addTransaction = (transaction: Transaction) => {
     }))
 }
 
+export const getTransactions = (month: string) => {
+  return localDb.get<LocalDB>(month).then(allMonthTransactions => allMonthTransactions.transactions)
+}
