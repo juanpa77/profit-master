@@ -1,45 +1,39 @@
 import { useState, useEffect } from "react";
+import { Transaction } from "../../global";
+import { getTransactions, Transactions } from "../../services/pouchDb";
+import { formatNumberMonth } from "../../utility/formatData";
 
-type Props = {
-  // db: Idb
-  dateRanges: string
-}
+export type TimeFrame = 'days' | 'months' | 'weeks'
 
-const useBalance = ({ dateRanges }: Props) => {
-  const currentMonth = "0" + (new Date().getMonth() + 1);
+const useBalance = (timeFrame: TimeFrame) => {
+  const currentMonth = formatNumberMonth(new Date().getMonth())
+  const [allTransactions, setAllTransactions] = useState<Transactions>()
+  const [totalIncomeMonth, setTotalIncomeMonth] = useState(0);
+  const [totalExpensesMonth, setTotalExpensesMonth] = useState(0);
+  const [available, setAvailable] = useState(0)
 
-  const [totalIncome, setTotalIncome] = useState(0);
-  const [monthExpenses, setMonthExpenses] = useState(0);
+  const calcTotalAmount = (transactions: Transaction[]) => {
+    return transactions.reduce((totalIncome, currentIncome) => totalIncome + currentIncome.amount, 0)
+  }
 
-  const [available, setAvailable] = useState(0);
+  const calcAvailable = (timeFrame: TimeFrame) => {
+    if (timeFrame === "months") return setAvailable(totalIncomeMonth - totalExpensesMonth)
+  }
 
-  const [income, setIncome] = useState(0);
-  const [expenses, setExpenses] = useState(0);
+  useEffect(() => {
+    getTransactions(currentMonth)
+      .then(transactions => setAllTransactions(transactions))
+  }, [])
 
-  const calcAvailable = () => {
-    if (dateRanges === "Mensual")
-      setAvailable(totalIncome - monthExpenses - expenses);
-    if (dateRanges === "Semanal")
-      setAvailable(Math.round((totalIncome - monthExpenses) / 4 - expenses));
-    if (dateRanges === "Diario")
-      setAvailable(Math.round((totalIncome - monthExpenses) / 31 - expenses));
-  };
+  useEffect(() => {
+    allTransactions && setTotalIncomeMonth(calcTotalAmount(allTransactions.income))
+    allTransactions && setTotalExpensesMonth(calcTotalAmount(allTransactions.expenses))
+    calcAvailable(timeFrame)
+    console.log(currentMonth)
+  }, [allTransactions]
+  )
 
-  /*   useEffect(() => {
-      db.getFixedExpenses(currentMonth).then((res) => setMonthExpenses(res));
-      db.getAmount(currentMonth, dateRanges, "Income").then((res) =>
-        setIncome(res)
-      );
-      db.getAmount(currentMonth, "Mensual", "Income").then((res) =>
-        setTotalIncome(res)
-      );
-      db.getAmount(currentMonth, dateRanges, "Expenses").then((res) =>
-        setExpenses(res)
-      );
-      calcAvailable();
-    }, [income, expenses, totalIncome]); */
-
-  return [available, income, expenses, dateRanges] as const
+  return { available, totalIncomeMonth, totalExpensesMonth }
 }
 
 export default useBalance

@@ -39,7 +39,7 @@ const TransactionForm = ({ locale }: Props) => {
         defaultCategory='s/n'
       />
       <Description
-        placeholder={t.enterADescription}
+        placeholder={t.addDescription}
         onChange={(e) => handleInputChange(e)}
         name="description"
         aria-label="description"
@@ -47,7 +47,7 @@ const TransactionForm = ({ locale }: Props) => {
       <Submit
         onClick={sendTransaction}
         aria-label="submit button">
-        {t.send}
+        {t.add}
       </Submit>
     </>
   )

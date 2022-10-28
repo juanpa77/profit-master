@@ -1,4 +1,5 @@
 
+export type TransactionType = 'expenses' | 'income'
 export interface Transaction {
   id: string
   type: string
@@ -8,7 +9,7 @@ export interface Transaction {
   description: string
 }
 
-export interface Filters {
+export type Filters = {
   type: string
   week: string
   month: string

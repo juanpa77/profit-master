@@ -6,6 +6,6 @@ export default {
   expense: 'expense', 
   incomes: 'income',
   expenses: 'expense',
-  enterADescription: ' enter a description',
-  send: 'send'
+  addDescription: 'add description',
+  add:'add'
 }

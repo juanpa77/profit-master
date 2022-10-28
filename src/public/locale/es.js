@@ -6,6 +6,6 @@ export default {
   expense: 'gastos',
   incomes: 'ingreso',
   expenses: 'gasto',
-  enterADescription: 'ingrese una descripción',
-  send: 'enviar'
+  addDescription: 'agregar una descripción',
+  add:'agregar'
 }
