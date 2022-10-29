@@ -36,6 +36,23 @@ export interface Transactions {
   income: Transaction[]
 }
 
+interface TransactionFromLocalDB {
+  id: string
+  type: string
+  amount: string
+  date: string
+  category: string
+  description: string
+}
+
+interface TransactionsDB {
+  _id: string,
+  transactions: {
+    expenses: TransactionFromLocalDB[]
+    income: TransactionFromLocalDB[]
+  }
+}
+
 export const createMonthStructure = () => {
   const months = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
   const monthsId = months.map(month => { return { _id: month } })
@@ -85,6 +102,20 @@ export const addTransaction = (transaction: Transaction) => {
     }))
 }
 
+const formatTransactions = (transactions: TransactionFromLocalDB[]) => {
+  return transactions.map(transaction => {
+    return {
+      ...transaction,
+      amount: parseInt(transaction.amount)
+    }
+  })
+}
+
 export const getTransactions = (month: string) => {
-  return localDb.get<LocalDB>(month).then(allMonthTransactions => allMonthTransactions.transactions)
+  return localDb.get<TransactionsDB>(month).then(allMonthTransactions => {
+    return {
+      expenses: formatTransactions(allMonthTransactions.transactions.expenses),
+      income: formatTransactions(allMonthTransactions.transactions.income)
+    }
+  })
 }
