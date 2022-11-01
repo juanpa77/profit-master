@@ -37,5 +37,9 @@ export const NumberItem = styled('div')`
 `
 
 export const Line = styled('div')`
-  background: var(--bottom-bg-colorPrimary);
+  background: linear-gradient(
+    109.5deg,
+    #7569ff -22.6%,
+    #d869ff 118.85%
+  );
 `

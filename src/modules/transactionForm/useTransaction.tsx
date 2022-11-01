@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { nanoid } from "nanoid"
 import { ChangeEvent, useEffect, useState } from "react"
 import { Transaction } from "../../global"
@@ -15,7 +16,7 @@ type InputChange = ChangeEvent<
 const useTransaction = () => {
   const [transaction, setTransaction] = useState<Transaction>({
     id: nanoid(10),
-    type: 'expense',
+    type: 'expenses',
     amount: 0,
     date: formatDate(new Date()),
     category: '',
@@ -36,7 +37,6 @@ const useTransaction = () => {
 
     return (() => { isActive = false })
   }, [])
-  console.log(transaction)
 
   const handleInputChange = (e: InputChange) => {
     setTransaction({
@@ -55,7 +55,7 @@ const useTransaction = () => {
   const resetTransactionForm = () => {
     setTransaction({
       id: nanoid(10),
-      type: "expense",
+      type: 'expenses',
       amount: 0,
       date: formatDate(new Date()),
       category: "",

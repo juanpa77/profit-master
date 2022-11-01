@@ -11,7 +11,7 @@ export class SubjectManager {
     category: 'todas',
     week: 'todas',
     month: formatNumberMonth(new Date().getMonth()),
-    type: 'Expenses'
+    type: 'expenses'
   })
 
   get getSubject() {

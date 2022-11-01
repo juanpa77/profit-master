@@ -1,18 +1,20 @@
 import type { NextPage } from 'next'
-import Link from 'next/link'
-// import '../styles/reset.css'
+import { useRouter } from 'next/router'
+import { Balance } from '../components/balance'
+import en from '../public/locale/en'
+import es from '../public/locale/es'
 
 const Home: NextPage = () => {
+  const router = useRouter()
+  const { locale } = router
+  const t = locale === 'en' ? en : es
+
   return (
-    <div>
-      <h1>Hello world test</h1>
-      <Link href='/login'>
-        <span>go to login</span>
-      </Link>
-      <Link href='/add-transaction'>
-        <span>go to add-transaction</span>
-      </Link>
-    </div>
+    <>
+      <Balance locale={locale} timeFrame='months' />
+      <Balance locale={locale} timeFrame='weeks' />
+      <Balance locale={locale} timeFrame='days' />
+    </>
   )
 }
 

@@ -28,7 +28,7 @@ const Layout = ({ children }: Props) => {
     },
   ]
 
-  const [selectedIcon, setSelectedIcon] = useState(icons[1])
+  const [selectedIcon, setSelectedIcon] = useState(icons[0])
 
   return (
     <Background>
