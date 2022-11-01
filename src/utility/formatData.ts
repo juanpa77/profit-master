@@ -1,4 +1,8 @@
-// new function to format day number
+import { isWithinInterval } from 'date-fns'
+import { startOfWeek } from 'date-fns'
+import { add } from 'date-fns'
+
+
 const formatNumberDay = (day: Number) => day < 10 ? `${'0' + day}` : day
 
 export const formatDate = (date: Date): string => {
@@ -16,6 +20,11 @@ export const splitDate = (date: string) => {
     year: formatDate[2]
   }
 };
+
+const formatStringToDate = (date: string) => {
+  const { day, month, year } = splitDate(date)
+  return new Date(parseInt(year), parseInt(month) - 1, parseInt(day))
+}
 
 export const getNumberOfMonth = (month: string) => {
   const months = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre']
@@ -38,3 +47,14 @@ export const formatNumber = (number: number) => {
     minimumFractionDigits: 0,
   }).format(number);
 };
+
+export const isDayInCurrentWeek = (date: string) => {
+  const formatDate = formatStringToDate(date)
+  console.log(formatDate)
+  const startDay = startOfWeek(new Date(), { weekStartsOn: 1 })
+  const interval = {
+    start: startDay,
+    end: add(startDay, { weeks: 1 })
+  }
+  return isWithinInterval(formatDate, interval)
+}
