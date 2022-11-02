@@ -21,7 +21,7 @@ export const splitDate = (date: string) => {
   }
 };
 
-const formatStringToDate = (date: string) => {
+export const formatStringToDate = (date: string) => {
   const { day, month, year } = splitDate(date)
   return new Date(parseInt(year), parseInt(month) - 1, parseInt(day))
 }
@@ -50,7 +50,6 @@ export const formatNumber = (number: number) => {
 
 export const isDayInCurrentWeek = (date: string) => {
   const formatDate = formatStringToDate(date)
-  console.log(formatDate)
   const startDay = startOfWeek(new Date(), { weekStartsOn: 1 })
   const interval = {
     start: startDay,

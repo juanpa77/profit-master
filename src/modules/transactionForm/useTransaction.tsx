@@ -4,7 +4,8 @@ import { ChangeEvent, useEffect, useState } from "react"
 import { Transaction } from "../../global"
 import { addTransaction } from "../../services/pouchDb"
 import { sharingFilter } from "../../services/sharing-filter"
-import { formatDate } from "../../utility/formatData"
+import { formatDate, formatStringToDate } from "../../utility/formatData"
+import { calcWeekOfMonth } from "./services/calcDate"
 
 type InputChange = ChangeEvent<
   | HTMLInputElement
@@ -20,10 +21,13 @@ const useTransaction = () => {
     amount: 0,
     date: formatDate(new Date()),
     category: '',
-    description: ''
+    description: '',
+    week: calcWeekOfMonth(new Date())
   })
-
   const subscriptionToggle = sharingFilter.getSubject
+
+  useEffect(() => setTransaction({ ...transaction, week: calcWeekOfMonth(formatStringToDate(transaction.date)) }), [transaction.date])
+
   useEffect(() => {
     let isActive = true
     subscriptionToggle.subscribe((filters) => {
@@ -60,6 +64,7 @@ const useTransaction = () => {
       date: formatDate(new Date()),
       category: "",
       description: "",
+      week: calcWeekOfMonth(new Date())
     });
   }
 
