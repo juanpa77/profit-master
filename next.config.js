@@ -14,6 +14,10 @@ const nextConfig = {
         use: ['@svgr/webpack'],
       });
       return config
+    },
+    i18n: {
+      locales: ['en', 'es'],
+      defaultLocale: 'en'
     }
 }
 
