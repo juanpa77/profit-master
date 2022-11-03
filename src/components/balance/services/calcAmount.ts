@@ -1,4 +1,4 @@
-import { startOfWeek, startOfMonth, endOfMonth } from "date-fns"
+import { startOfWeek, startOfMonth, endOfMonth, getWeeksInMonth } from "date-fns"
 
 
 // calculate whether to divide the month into 4 or 5 weeks depending on the start day of the month
@@ -18,5 +18,11 @@ const divideMonth = () => {
 }
 
 export const calcAvailableForWeek = (totalIncomeMonth: number, totalExpensesMonth: number) => {
-  return (totalIncomeMonth - totalExpensesMonth) / divideMonth()
+  const totalWeeksOfMonth = getWeeksInMonth(new Date(), { weekStartsOn: 1 })
+  return (totalIncomeMonth - totalExpensesMonth) / totalWeeksOfMonth
+}
+
+export const calcAvailableForCurrentWeek = (totalIncomeMonth: number, totalExpensesMonth: number, currentExpenses: number) => {
+  const totalWeeksOfMonth = getWeeksInMonth(new Date(), { weekStartsOn: 1 })
+  return ((totalIncomeMonth - totalExpensesMonth) / totalWeeksOfMonth) - currentExpenses
 }
