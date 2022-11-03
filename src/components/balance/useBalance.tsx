@@ -1,10 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { startOfWeek } from "date-fns";
 import { useState, useEffect } from "react";
-import { Transaction } from "../../global";
 import { getTransactions, Transactions } from "../../services/pouchDb";
-import { formatDate, formatNumberMonth, isDayInCurrentWeek, splitDate } from "../../utility/formatData";
-import { calcAvailableForWeek } from "./services/calcAmount";
+import { formatDate, formatNumberMonth, splitDate } from "../../utility/formatData";
+import { calcAvailableForWeek, getTotalAmount } from "./services/calcAmount";
 
 export type TimeFrame = 'days' | 'months' | 'weeks'
 
@@ -19,27 +18,6 @@ const useBalance = (timeFrame: TimeFrame) => {
 
   const [totalIncome, setTotalIncome] = useState(0)
   const [totalExpenses, setTotalExpenses] = useState(0)
-
-  const filterTransactionPerDay = (transactions: Transaction[]) => {
-    return transactions.filter(transaction => splitDate(transaction.date).day === currentDate.day)
-  }
-
-  const filterTransactionPerWeek = (transactions: Transaction[]) => {
-    return transactions.filter(transaction => isDayInCurrentWeek(transaction.date))
-  }
-
-  const calcTotalAmount = (transactions: Transaction[]) => {
-    return transactions.reduce((accumulator, transaction) => accumulator + transaction.amount, 0)
-  }
-
-  const getTotalAmount = (transactions: Transaction[], timeFrame: TimeFrame) => {
-    const calc = {
-      days: () => calcTotalAmount(filterTransactionPerDay(transactions)),
-      weeks: () => calcTotalAmount(filterTransactionPerWeek(transactions)),
-      months: calcTotalAmount(transactions)
-    }
-    return calc[timeFrame]
-  }
 
   const calcAvailable = (timeFrame: TimeFrame) => {
     const available = {
