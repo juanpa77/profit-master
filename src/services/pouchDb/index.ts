@@ -43,6 +43,7 @@ interface TransactionFromLocalDB {
   date: string
   category: string
   description: string
+  week: number
 }
 
 interface TransactionsDB {
@@ -86,7 +87,12 @@ const updateTransactions = (transaction: Transaction, doc?: LocalDB) => {
 }
 
 export const addTransaction = (transaction: Transaction) => {
-  const id = splitDate(transaction.date).month
+  const currentMonth = splitDate(transaction.date).month
+  let id: string
+  transaction.week === 0
+    ? id = `${parseInt(currentMonth) - 1}`
+    : id = currentMonth
+
   localDb.get<LocalDB>(id)
     .then(doc => {
       return localDb.put<LocalDB>({

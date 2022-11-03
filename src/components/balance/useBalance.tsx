@@ -1,4 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+import { startOfWeek } from "date-fns";
 import { useState, useEffect } from "react";
 import { Transaction } from "../../global";
 import { getTransactions, Transactions } from "../../services/pouchDb";
@@ -8,7 +9,7 @@ import { calcAvailableForWeek } from "./services/calcAmount";
 export type TimeFrame = 'days' | 'months' | 'weeks'
 
 const useBalance = (timeFrame: TimeFrame) => {
-  const currentMonth = formatNumberMonth(new Date().getMonth())
+  const currentMonth = formatNumberMonth(startOfWeek(new Date(), { weekStartsOn: 1 }).getMonth())
   const currentDate = splitDate(formatDate(new Date()))
   const numberOfDaysInMonth = new Date(parseInt(currentDate.year), parseInt(currentDate.month), 0).getDate()
   const [allTransactions, setAllTransactions] = useState<Transactions>()
