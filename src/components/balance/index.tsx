@@ -10,7 +10,7 @@ type Props = {
 }
 
 export const Balance = ({ locale, timeFrame }: Props) => {
-  const { available, totalExpenses, totalIncome } = useBalance(timeFrame)
+  const { available, currentExpenses, currentIncome } = useBalance(timeFrame)
   const t = locale === 'en' ? en : es
 
   return (
@@ -24,11 +24,11 @@ export const Balance = ({ locale, timeFrame }: Props) => {
         <WrapperItem direction="row">
           <WrapperItem>
             <Item>{t.income}</Item>
-            <NumberItem>{formatNumber(totalIncome)}</NumberItem>
+            <NumberItem>{formatNumber(currentIncome)}</NumberItem>
           </WrapperItem>
           <WrapperItem>
             <Item>{t.expense}</Item>
-            <NumberItem>{formatNumber(totalExpenses)}</NumberItem>
+            <NumberItem>{formatNumber(currentExpenses)}</NumberItem>
           </WrapperItem>
         </WrapperItem>
       </WrapperCard>
