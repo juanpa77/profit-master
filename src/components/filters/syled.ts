@@ -2,19 +2,27 @@ import styled from "@emotion/styled";
 import { motion } from "framer-motion";
 
 export const Wrapper = styled(motion.div)`
-display: flex;
-flex-direction: row;
-justify-content: space-evenly;
+display: grid;
+grid-template-columns: repeat(3, 1fr);
 width: 80%;
 border-radius: 6px;
-background-color: #8e05d247;
+background-color: #12001b47;
 `
 type Props = {
-  isselected: boolean
+  position: string
 }
 export const Filter = styled(motion.div)`
+grid-row: 1/1;
 margin: 3px;
 padding: 10px 12px;
 border-radius: 5px;
-background-color: ${({ isselected }: Props) => isselected && '#4c4f67d4'};
+grid-column: ${({ position }: Props) => position};
+`
+export const Select = styled(motion.div)`
+grid-row: 1/1;
+margin: 3px;
+padding: 10px 12px;
+border-radius: 5px;
+grid-column: ${({ position }: Props) => position};
+background-color: #fff3;
 `
