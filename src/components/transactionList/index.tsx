@@ -1,8 +1,6 @@
 
-import React from 'react'
 import { formatNumber } from '../../utility/formatNumber'
 import { Item, TransactionItem, Wrapper } from './styled'
-import { Line } from './styled'
 import useTransactionList from './useTransactionList'
 
 const TransactionList = () => {

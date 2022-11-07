@@ -7,5 +7,8 @@ export default {
   incomes: 'ingreso',
   expenses: 'gasto',
   addDescription: 'agregar una descripción',
-  add:'agregar'
+  add:'agregar',
+  day: 'dia',
+  month: 'mes',
+  week: 'semana'
 }

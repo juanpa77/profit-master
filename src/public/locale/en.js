@@ -7,5 +7,8 @@ export default {
   incomes: 'income',
   expenses: 'expense',
   addDescription: 'add description',
-  add:'add'
+  add:'add',
+  day: 'day',
+  month: 'month',
+  week: 'week'
 }
