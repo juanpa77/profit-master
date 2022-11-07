@@ -1,8 +1,3 @@
-import { isWithinInterval } from 'date-fns'
-import { startOfWeek } from 'date-fns'
-import { add } from 'date-fns'
-
-
 const formatNumberDay = (day: Number) => day < 10 ? `${'0' + day}` : day
 
 export const formatDate = (date: Date): string => {
@@ -10,7 +5,6 @@ export const formatDate = (date: Date): string => {
     }-${formatNumberDay(date.getDate())}`;
   return formattedDate;
 };
-
 
 export const splitDate = (date: string) => {
   const formatDate = date.split("-").reverse();
@@ -47,13 +41,3 @@ export const formatNumber = (number: number) => {
     minimumFractionDigits: 0,
   }).format(number);
 };
-
-export const isDayInCurrentWeek = (date: string) => {
-  const formatDate = formatStringToDate(date)
-  const startDay = startOfWeek(new Date(), { weekStartsOn: 1 })
-  const interval = {
-    start: startDay,
-    end: add(startDay, { weeks: 1 })
-  }
-  return isWithinInterval(formatDate, interval)
-}

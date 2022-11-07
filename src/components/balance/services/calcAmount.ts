@@ -13,7 +13,7 @@ export const calcAvailableForCurrentWeek = (totalIncomeMonth: number, totalExpen
   return ((totalIncomeMonth - totalExpensesMonth) / totalWeeksOfMonth) - currentExpenses
 }
 
-const calcTotalAmount = (transactions: Transaction[]) => {
+export const calcTotalAmount = (transactions: Transaction[]) => {
   return transactions.reduce((accumulator, transaction) => accumulator + transaction.amount, 0)
 }
 
