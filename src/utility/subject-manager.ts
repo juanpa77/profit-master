@@ -7,11 +7,11 @@ interface Filter {
   value: string
 }
 export class SubjectManager {
-  private subject$: BehaviorSubject<Filters> = new BehaviorSubject({
+  private subject$ = new BehaviorSubject<Filters>({
+    type: 'expenses',
     category: 'todas',
     week: 'todas',
-    month: formatNumberMonth(new Date().getMonth()),
-    type: 'expenses'
+    month: formatNumberMonth(new Date().getMonth())
   })
 
   get getSubject() {
