@@ -5,9 +5,18 @@ import useFilter from "./useFilter"
 import { getWeekOfMonth, getWeeksInMonth } from 'date-fns'
 import { newArrayOfNumbers } from "../../utility/array"
 import { getDaysInMonth } from 'date-fns'
+import { FilterName } from "../../utility/subject-manager"
 
 type Props = {
   locale: string | undefined
+}
+
+export interface Filters {
+  idName: FilterName;
+  name: string
+  position: string;
+  dates: string[];
+  currentDate: number;
 }
 
 const spring = {
@@ -20,10 +29,10 @@ const Filters = ({ locale }: Props) => {
   const weeksOfMonth = newArrayOfNumbers(getWeeksInMonth(new Date(), { weekStartsOn: 1 }))
   const daysOfMonth = newArrayOfNumbers(getDaysInMonth(new Date))
 
-  const filters = [
-    { name: t.week, position: '1 / 2', dates: weeksOfMonth, currentDate: getWeekOfMonth(new Date(), { weekStartsOn: 1 }) - 1 },
-    { name: t.month, position: '2/3', dates: t.Months, currentDate: new Date().getMonth() },
-    { name: t.day, position: '3/4', dates: daysOfMonth, currentDate: new Date().getDate() - 1 }
+  const filters: Filters[] = [
+    { idName: 'week', name: t.week, position: '1 / 2', dates: weeksOfMonth, currentDate: getWeekOfMonth(new Date(), { weekStartsOn: 1 }) - 1 },
+    { idName: 'month', name: t.month, position: '2/3', dates: t.Months, currentDate: new Date().getMonth() },
+    { idName: 'day', name: t.day, position: '3/4', dates: daysOfMonth, currentDate: new Date().getDate() - 1 }
   ]
 
   const {
@@ -52,10 +61,10 @@ const Filters = ({ locale }: Props) => {
       <WrapperSelectedFilter
         ref={scroll}
       >
-        {selectedFilter.dates?.map((date, i) => {
+        {selectedFilter.dates?.map(date => {
           return (
             <SelectedFilter
-              onClick={() => handleFilterDate(date, i)}
+              onClick={() => handleFilterDate(date)}
               isselected={(selectedDate === date) ? 'selected' : ''}
               key={date}>
               {date}

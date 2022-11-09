@@ -1,13 +1,10 @@
 import { useState, useEffect, useRef } from "react";
+import { Filters } from ".";
 import { sharingFilter } from "../../services/sharing-filter"
+import { getNumberOfMonth } from "../../utility/formatData";
 
 type Props = {
-  filters: {
-    name: string;
-    position: string;
-    dates: string[];
-    currentDate: number;
-  }[]
+  filters: Filters[]
 }
 
 const useFilter = ({ filters, }: Props) => {
@@ -25,11 +22,14 @@ const useFilter = ({ filters, }: Props) => {
     )
   }, [selectedFilter, setSelectedFilter])
 
-  const handleFilterDate = (date: string, index: number) => {
+  const handleFilterDate = (date: string) => {
+    const formateDate = selectedFilter.idName === 'month'
+      ? getNumberOfMonth(date).toString()
+      : date
     setSelectedDate(date)
     sharingFilter.setSubject = {
-      name: 'month',
-      value: index.toString()
+      name: selectedFilter.idName,
+      value: formateDate
     }
   }
 

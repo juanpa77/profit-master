@@ -2,8 +2,9 @@ import { BehaviorSubject } from "rxjs";
 import { Filters } from "../global";
 import { formatNumberMonth, getNumberOfMonth } from "./formatData";
 
+export type FilterName = 'month' | 'day' | 'week' | 'type'
 interface Filter {
-  name: 'month' | 'day' | 'week' | 'type'
+  name: FilterName
   value: string
 }
 export class SubjectManager {
