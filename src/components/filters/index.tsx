@@ -16,10 +16,10 @@ const spring = {
   stiffness: 700,
   damping: 30
 };
-const weeksOfMonth = newArrayOfNumbers(getWeeksInMonth(new Date(), { weekStartsOn: 1 }))
-const daysOfMonth = newArrayOfNumbers(getDaysInMonth(new Date))
 const Filters = ({ locale }: Props) => {
   const t = locale === 'en' ? en : es
+  const weeksOfMonth = newArrayOfNumbers(getWeeksInMonth(new Date(), { weekStartsOn: 1 }))
+  const daysOfMonth = newArrayOfNumbers(getDaysInMonth(new Date))
 
   const filters = [
     { name: t.week, position: '1 / 2', dates: weeksOfMonth, currentDate: getWeekOfMonth(new Date(), { weekStartsOn: 1 }) - 1 },
@@ -27,23 +27,14 @@ const Filters = ({ locale }: Props) => {
     { name: t.day, position: '3/4', dates: daysOfMonth, currentDate: new Date().getDate() - 1 }
   ]
 
-  const [selectedFilter, setSelectedFilter] = useState(filters[1]);
-  const [selectedDate, setSelectedDate] = useState(selectedFilter.dates![selectedFilter.currentDate]);
+  const {
+    scroll,
+    selectedFilter,
+    setSelectedFilter,
+    handleFilterDate,
+    selectedDate
+  } = useFilter({ filters })
 
-  const scroll = useRef<HTMLDivElement>(null)
-  const handleFilter = useFilter()
-
-  useEffect(() => {
-    console.log(new Date().getDate())
-    const position = filters[1].dates!.indexOf(selectedDate) * 55
-    setSelectedDate(selectedFilter.dates![selectedFilter.currentDate])
-    scroll.current?.scroll(position, 0)
-  }, [selectedFilter])
-
-  const handleFilterDate = (month: string, index: number) => {
-    setSelectedDate(month)
-    handleFilter(index)
-  }
 
   return (
     <>
