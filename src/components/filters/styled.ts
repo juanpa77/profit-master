@@ -32,13 +32,17 @@ type Prop = {
 export const SelectedFilter = styled(motion.div)`
 border-radius: 5px;
 background-color:${({ isselected }: Prop) => isselected === 'selected' ? '#740ba5' : '#fff3'};
+text-align: center;
 width: max-content;
 padding: 5px;
 margin: 0px 5px;
+min-width: 50px;
 `
 export const WrapperSelectedFilter = styled(motion.div)`
 display: grid;
-grid-template-columns: repeat(12, 1fr);
+grid-template-columns: repeat(auto-fit, 1fr);
+grid-auto-flow: column;
+/* justify-content: space-evenly; */
 overflow-x: scroll;
 width: 100%;
 `

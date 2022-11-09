@@ -1,5 +1,4 @@
-import { useState, useEffect, RefObject, useRef } from "react";
-import filters from ".";
+import { useState, useEffect, useRef } from "react";
 import { sharingFilter } from "../../services/sharing-filter"
 
 type Props = {
@@ -9,7 +8,6 @@ type Props = {
     dates: string[];
     currentDate: number;
   }[]
-  // scroll: RefObject<HTMLDivElement>
 }
 
 const useFilter = ({ filters, }: Props) => {
@@ -18,21 +16,20 @@ const useFilter = ({ filters, }: Props) => {
   const scroll = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    console.log(new Date().getDate())
-    const position = filters[1].dates!.indexOf(selectedDate) * 55
-    setSelectedDate(selectedFilter.dates![selectedFilter.currentDate])
-    scroll.current?.scroll(position, 0)
-  }, [selectedFilter, selectedDate])
+    setSelectedDate((selectedDate) =>
+      ((result) => {
+        const position = selectedFilter.dates!.indexOf(result) * 50
+        scroll.current?.scroll(position, 0)
+        return result
+      })(selectedFilter.dates![selectedFilter.currentDate])
+    )
+  }, [selectedFilter, setSelectedFilter])
 
-  const handleFilterDate = (month: string, index: number) => {
-    setSelectedDate(month)
-    handleFilter(index)
-  }
-  const handleFilter = (month: number) => {
-    console.log(month.toString())
+  const handleFilterDate = (date: string, index: number) => {
+    setSelectedDate(date)
     sharingFilter.setSubject = {
       name: 'month',
-      value: month.toString()
+      value: index.toString()
     }
   }
 

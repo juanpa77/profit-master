@@ -1,4 +1,3 @@
-import { useEffect, useRef, useState } from "react"
 import en from "../../public/locale/en"
 import es from "../../public/locale/es"
 import { Filter, Select, SelectedFilter, Wrapper, WrapperSelectedFilter } from "./styled"
