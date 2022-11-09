@@ -10,5 +10,6 @@ export default {
   add:'agregar',
   day: 'dia',
   month: 'mes',
-  week: 'semana'
+  week: 'semana',
+  Months:['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto', 'Septiembre','Octubre','Noviembre','Diciembre']
 }

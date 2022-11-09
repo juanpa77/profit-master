@@ -5,7 +5,7 @@ import useTransactionList from './useTransactionList'
 
 const TransactionList = () => {
   const transactionList = useTransactionList()
-  console.log(transactionList)
+  // console.log(transactionList)
   return (
     <Wrapper>
       {transactionList.map(transaction =>

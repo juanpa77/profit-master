@@ -10,5 +10,6 @@ export default {
   add:'add',
   day: 'day',
   month: 'month',
-  week: 'week'
+  week: 'week',
+  Months: ['January','February','March','April','May','June','July','August','September','October','November','December',]
 }
