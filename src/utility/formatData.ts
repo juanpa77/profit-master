@@ -25,8 +25,11 @@ export const getNumberOfMonth = (month: string) => {
   return months.indexOf(month)
 }
 
-export const formatNumberMonth = (month: number): string => {
-  const formatMonth = month + 1
+export const formatNumberMonth = (month: number | string): string => {
+  let formatMonth = typeof month === 'string'
+    ? parseInt(month)
+    : month
+  formatMonth++
   return formatMonth <= 9
     ? '0' + formatMonth.toString()
     : formatMonth.toString()

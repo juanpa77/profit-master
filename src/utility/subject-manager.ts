@@ -3,7 +3,7 @@ import { Filters } from "../global";
 import { formatNumberMonth, getNumberOfMonth } from "./formatData";
 
 interface Filter {
-  name: string
+  name: 'month' | 'day' | 'week' | 'type'
   value: string
 }
 export class SubjectManager {
@@ -23,10 +23,13 @@ export class SubjectManager {
     if (filter.name === 'month') {
       this.subject$.next({
         ...this.subject$.getValue(),
-        [filter.name]: formatNumberMonth(getNumberOfMonth(filter.value))
+        [filter.name]: formatNumberMonth(filter.value)
       })
       return
     }
-    this.subject$.next({ ...this.subject$.getValue(), [filter.name]: filter.value })
+    this.subject$.next({
+      ...this.subject$.getValue(),
+      [filter.name]: filter.value
+    })
   }
 }
