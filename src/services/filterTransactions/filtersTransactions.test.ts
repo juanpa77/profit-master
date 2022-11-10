@@ -1,6 +1,6 @@
 import { startOfWeek } from "date-fns";
 import { describe, expect, it } from "vitest";
-import { isDayInCurrentWeek } from "./filtersTransactions";
+import { isDayInCurrentWeek } from "./byDate";
 
 describe('isDayInCurrentWeek', () => {
   it('should return true if day belong to current week', () => {

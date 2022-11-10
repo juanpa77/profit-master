@@ -1,7 +1,7 @@
 import { getWeeksInMonth } from "date-fns"
 import { Transaction } from "../../../global"
 import { TimeFrame } from "../useBalance"
-import { filterTransactionPerDay, filterTransactionPerWeek } from "./filtersTransactions"
+import { filterTransactionPerDay, filterTransactionPerWeek } from "../../../services/filterTransactions/byDate"
 
 export const calcAvailableForWeek = (totalIncomeMonth: number, totalExpensesMonth: number) => {
   const totalWeeksOfMonth = getWeeksInMonth(new Date(), { weekStartsOn: 1 })
