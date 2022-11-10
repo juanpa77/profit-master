@@ -1,6 +1,5 @@
 
 export type TransactionType = 'expenses' | 'income'
-type dayOfWeek = 0 | 1 | 2 | 3 | 4 | 5 | 6
 export interface Transaction {
   id: string
   type: string
@@ -11,8 +10,8 @@ export interface Transaction {
   week: number
 }
 
-export type Filters = {
-  type: string
+export interface Filters {
+  type: TransactionType
   week: string
   month: string
   category: string

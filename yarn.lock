@@ -1019,10 +1019,10 @@
   "resolved" "https://registry.npmjs.org/@capacitor/android/-/android-4.3.0.tgz"
   "version" "4.3.0"
 
-"@capacitor/cli@^4.3.0":
-  "integrity" "sha512-+IBIJvxpHWSrtfb6XxPSh5m5h5ijLBqh0aGPxvj0nm7mXUwkT/fuQbeEUVCwIoImmYZCuUAFIkQFB0nWd74bEg=="
-  "resolved" "https://registry.npmjs.org/@capacitor/cli/-/cli-4.3.0.tgz"
-  "version" "4.3.0"
+"@capacitor/cli@^4.4.0":
+  "integrity" "sha512-BB/gbUtZ2PVrUSoqkQAOCvOtEP/5IDG3aZvlqT53RAzmt/rIbcOi7qimOoLsS9iCtNtAIN+UgCqb+f62GdvV5Q=="
+  "resolved" "https://registry.npmjs.org/@capacitor/cli/-/cli-4.4.0.tgz"
+  "version" "4.4.0"
   dependencies:
     "@ionic/cli-framework-output" "^2.2.5"
     "@ionic/utils-fs" "^3.1.6"

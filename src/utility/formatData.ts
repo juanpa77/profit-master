@@ -1,8 +1,3 @@
-import { isWithinInterval } from 'date-fns'
-import { startOfWeek } from 'date-fns'
-import { add } from 'date-fns'
-
-
 const formatNumberDay = (day: Number) => day < 10 ? `${'0' + day}` : day
 
 export const formatDate = (date: Date): string => {
@@ -10,7 +5,6 @@ export const formatDate = (date: Date): string => {
     }-${formatNumberDay(date.getDate())}`;
   return formattedDate;
 };
-
 
 export const splitDate = (date: string) => {
   const formatDate = date.split("-").reverse();
@@ -27,12 +21,18 @@ export const formatStringToDate = (date: string) => {
 }
 
 export const getNumberOfMonth = (month: string) => {
-  const months = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre']
-  return months.indexOf(month)
+  const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+  const meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre']
+  const result = months.indexOf(month)
+  if (result !== -1) return result
+  return meses.indexOf(month)
 }
 
-export const formatNumberMonth = (month: number): string => {
-  const formatMonth = month + 1
+export const formatNumberMonth = (month: number | string): string => {
+  let formatMonth = typeof month === 'string'
+    ? parseInt(month)
+    : month
+  formatMonth++
   return formatMonth <= 9
     ? '0' + formatMonth.toString()
     : formatMonth.toString()
@@ -47,13 +47,3 @@ export const formatNumber = (number: number) => {
     minimumFractionDigits: 0,
   }).format(number);
 };
-
-export const isDayInCurrentWeek = (date: string) => {
-  const formatDate = formatStringToDate(date)
-  const startDay = startOfWeek(new Date(), { weekStartsOn: 1 })
-  const interval = {
-    start: startDay,
-    end: add(startDay, { weeks: 1 })
-  }
-  return isWithinInterval(formatDate, interval)
-}

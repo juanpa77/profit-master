@@ -2,16 +2,17 @@ import { BehaviorSubject } from "rxjs";
 import { Filters } from "../global";
 import { formatNumberMonth, getNumberOfMonth } from "./formatData";
 
+export type FilterName = 'month' | 'day' | 'week' | 'type'
 interface Filter {
-  name: string
+  name: FilterName
   value: string
 }
 export class SubjectManager {
-  private subject$: BehaviorSubject<Filters> = new BehaviorSubject({
+  private subject$ = new BehaviorSubject<Filters>({
+    type: 'expenses',
     category: 'todas',
     week: 'todas',
-    month: formatNumberMonth(new Date().getMonth()),
-    type: 'expenses'
+    month: formatNumberMonth(new Date().getMonth())
   })
 
   get getSubject() {
@@ -23,10 +24,13 @@ export class SubjectManager {
     if (filter.name === 'month') {
       this.subject$.next({
         ...this.subject$.getValue(),
-        [filter.name]: formatNumberMonth(getNumberOfMonth(filter.value))
+        [filter.name]: formatNumberMonth(filter.value)
       })
       return
     }
-    this.subject$.next({ ...this.subject$.getValue(), [filter.name]: filter.value })
+    this.subject$.next({
+      ...this.subject$.getValue(),
+      [filter.name]: filter.value
+    })
   }
 }

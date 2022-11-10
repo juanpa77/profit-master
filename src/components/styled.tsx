@@ -19,6 +19,7 @@ export const WrapperCard = styled('div')`
 type Props = {
   direction?: string
 }
+
 export const WrapperItem = styled('div')`
   display: flex;
   flex-direction: ${({ direction }: Props) => direction ? 'row' : 'column'};

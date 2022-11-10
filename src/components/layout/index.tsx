@@ -23,8 +23,8 @@ const Layout = ({ children }: Props) => {
     },
     {
       icon: ListIcon,
-      href: './',
-      label: 'transaction-list'
+      href: '/showTransactions',
+      label: 'showTransactions'
     },
   ]
 
