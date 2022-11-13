@@ -1,6 +1,7 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import { startOfWeek, getDaysInMonth } from "date-fns";
 import { useState, useEffect } from "react";
+import { fetchTransactions } from "../../redux/transactions/transactionsSlice";
+import { useAppDispatch, useAppSelector } from "../../redux/useApp";
 import { getTransactions, Transactions } from "../../services/pouchDb";
 import { formatNumberMonth } from "../../utility/formatData";
 import { calcAvailableForWeek, getTotalAmount } from "./services/calcAmount";
@@ -20,6 +21,9 @@ const useBalance = (timeFrame: TimeFrame) => {
   const [currentExpenses, setCurrentExpenses] = useState(0)
   const [available, setAvailable] = useState(0)
 
+  const dispatch = useAppDispatch()
+  const transactions = useAppSelector(state => state.transactions.data)
+
   const calcAvailable = (timeFrame: TimeFrame) => {
     const available = {
       days: () => ((totalIncomeMonth - totalExpensesMonth) / numberOfDaysInMonth) - currentExpenses,
@@ -30,9 +34,12 @@ const useBalance = (timeFrame: TimeFrame) => {
   }
 
   useEffect(() => {
-    getTransactions(currentMonth)
-      .then(transactions => setAllTransactions(transactions))
-  }, [])
+    // getTransactions(currentMonth)
+    //   .then(transactions => setAllTransactions(transactions))
+    dispatch(fetchTransactions(currentMonth))
+  }, [currentMonth, dispatch])
+
+  useEffect(() => setAllTransactions(transactions), [transactions])
 
   useEffect(() => {
     allTransactions && setTotalIncomeMonth(getTotalAmount(allTransactions.income, 'months'))
