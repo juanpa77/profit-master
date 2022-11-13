@@ -1,15 +1,15 @@
-import { configureStore } from '@reduxjs/toolkit'
+import { combineReducers, configureStore } from '@reduxjs/toolkit'
 import userReducer from './modules/user/userSlice'
+import transactionsReducer from './redux/transactions/transactionsSlice';
 import { createWrapper } from "next-redux-wrapper";
 
-// initial states here
-const initalState = {}
+const rootReducer = combineReducers({
+  user: userReducer,
+  transactions: transactionsReducer
+})
 
 const store = configureStore({
-  reducer: {
-    user: userReducer,
-    // categoryReducer
-  },
+  reducer: rootReducer,
   devTools: true
 })
 
