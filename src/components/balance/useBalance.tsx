@@ -1,8 +1,8 @@
 import { startOfWeek, getDaysInMonth } from "date-fns";
 import { useState, useEffect } from "react";
-import { fetchTransactions } from "../../redux/transactions/transactionsSlice";
+import { getAllTransactionsRequest } from "../../redux/transactions/transactionsSlice";
 import { useAppDispatch, useAppSelector } from "../../redux/useApp";
-import { getTransactions, Transactions } from "../../services/pouchDb";
+import { Transactions } from "../../services/pouchDb";
 import { formatNumberMonth } from "../../utility/formatData";
 import { calcAvailableForWeek, getTotalAmount } from "./services/calcAmount";
 
@@ -22,7 +22,7 @@ const useBalance = (timeFrame: TimeFrame) => {
   const [available, setAvailable] = useState(0)
 
   const dispatch = useAppDispatch()
-  const transactions = useAppSelector(state => state.transactions.data)
+  const transactions = useAppSelector(state => state.transactions.allTransactions)
 
   const calcAvailable = (timeFrame: TimeFrame) => {
     const available = {
@@ -33,11 +33,7 @@ const useBalance = (timeFrame: TimeFrame) => {
     return available[timeFrame]
   }
 
-  useEffect(() => {
-    // getTransactions(currentMonth)
-    //   .then(transactions => setAllTransactions(transactions))
-    dispatch(fetchTransactions(currentMonth))
-  }, [currentMonth, dispatch])
+  useEffect(() => { dispatch(getAllTransactionsRequest(currentMonth)) }, [currentMonth, dispatch])
 
   useEffect(() => setAllTransactions(transactions), [transactions])
 
@@ -46,7 +42,6 @@ const useBalance = (timeFrame: TimeFrame) => {
     allTransactions && setTotalExpensesMonth(getTotalAmount(allTransactions.expenses, 'months'))
     allTransactions && setCurrentExpenses(getTotalAmount(allTransactions.expenses, timeFrame))
     allTransactions && setCurrentIncome(getTotalAmount(allTransactions.income, timeFrame))
-    // allTransactions && console.log(allTransactions)
   }, [allTransactions])
 
   useEffect(() => {

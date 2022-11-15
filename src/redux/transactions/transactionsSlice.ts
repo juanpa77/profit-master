@@ -1,6 +1,6 @@
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { Action, createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { getTransactions } from "../../services/pouchDb";
-import { transactionsState } from "./types";
+import { Transactions, transactionsState } from "./types";
 
 const transactions: transactionsState = {
   loading: false,
@@ -21,27 +21,17 @@ const transactionsSlice = createSlice({
   name: 'transactions',
   initialState: transactions,
   reducers: {
-    // getAllTransactions: (state, action: PayloadAction<Transactions>) => {
-    //   state.expenses = action.payload.expenses
-    //   state.income = action.payload.income
-    // }
-  },
-  extraReducers(builder) {
-    builder.addCase(fetchTransactions.pending, (state) => {
+    getAllTransactionsRequest: (state, action: PayloadAction<string>) => {
       state.loading = true
-    })
-    builder.addCase(fetchTransactions.fulfilled, (state, action) => {
+
+    },
+    getAllTransactionsAction: (state, action: PayloadAction<Transactions>) => {
+      state.allTransactions = action.payload;
       state.loading = false
-      state.allTransactions = action.payload
-    })
-    builder.addCase(fetchTransactions.rejected, (state, action) => {
-      state.loading = false
-      state.allTransactions = state.allTransactions
-      state.error = action.error.message!
-    })
+    }
   },
 })
 
-// export const { getAllTransactions } = transactionsSlice.actions
+export const { getAllTransactionsAction, getAllTransactionsRequest } = transactionsSlice.actions
 
 export default transactionsSlice.reducer
