@@ -4,10 +4,11 @@ import { transactionsState } from "./types";
 
 const transactions: transactionsState = {
   loading: false,
-  data: {
+  allTransactions: {
     expenses: [],
     income: []
   },
+  filteredTransactions: [],
   error: ''
 }
 
@@ -31,11 +32,11 @@ const transactionsSlice = createSlice({
     })
     builder.addCase(fetchTransactions.fulfilled, (state, action) => {
       state.loading = false
-      state.data = action.payload
+      state.allTransactions = action.payload
     })
     builder.addCase(fetchTransactions.rejected, (state, action) => {
       state.loading = false
-      state.data = state.data
+      state.allTransactions = state.allTransactions
       state.error = action.error.message!
     })
   },

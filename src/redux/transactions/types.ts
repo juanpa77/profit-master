@@ -15,6 +15,7 @@ export interface Transactions {
 
 export type transactionsState = {
   loading: boolean
-  data: Transactions
+  allTransactions: Transactions
+  filteredTransactions: Transaction[]
   error: string
 }
