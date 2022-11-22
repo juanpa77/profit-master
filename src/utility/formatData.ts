@@ -47,3 +47,5 @@ export const formatNumber = (number: number) => {
     minimumFractionDigits: 0,
   }).format(number);
 };
+
+export const isCurrentMonth = (month: number) => new Date().getMonth() + 1 === month

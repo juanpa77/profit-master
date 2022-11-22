@@ -1,24 +1,18 @@
 import { useState } from "react";
-import { sharingFilter } from "../../../services/sharing-filter";
+import { setType } from "../../../redux/filters/filterSlice";
+import { useAppDispatch } from "../../../redux/useApp";
 
 export type TransactionType = {
   expenses: string
   income: string
-
 }
 
 const useToggle = () => {
   const [transactionType, setTransactionType] = useState<keyof TransactionType>('expenses')
-
+  const dispatch = useAppDispatch()
   const handleToggle = (valueType: keyof TransactionType) => {
-    let isActive = true
     setTransactionType(valueType)
-    sharingFilter.getSubject.subscribe(filers => { })
-    sharingFilter.setSubject = {
-      name: 'type',
-      value: valueType
-    }
-    isActive = false
+    dispatch(setType(valueType))
   }
   return { handleToggle, transactionType }
 }

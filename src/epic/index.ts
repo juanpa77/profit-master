@@ -1,15 +1,31 @@
-import { Action } from '@reduxjs/toolkit'
-import { ofType } from 'redux-observable'
-import { from, mergeMap, Observable } from 'rxjs'
+import { PayloadAction } from '@reduxjs/toolkit'
+import { Epic, ofType, StateObservable } from 'redux-observable'
+import { concatMap, from, mergeMap, Observable, of } from 'rxjs'
 import { map } from "rxjs"
-import { getAllTransactionsAction, getAllTransactionsRequest } from '../redux/transactions/transactionsSlice'
+import { TransactionType } from '../global'
+import { getAllTransactionsAction, getAllTransactionsRequest, setFilteredTransactions } from '../redux/transactions/transactionsSlice'
+import { SetFilter, Filters, setCategory, setMonth, setType, setWeek } from '../redux/filters/filterSlice'
 import { getTransactions } from "../services/pouchDb"
+import { RootState } from '../store'
 
-export const getTransactionsEpic = (action$: Observable<Action>) => action$.pipe(
-  ofType(getAllTransactionsRequest),
-  mergeMap((action: any) =>
+export const getTransactionsEpic: Epic = (action$: Observable<PayloadAction<string>>) => action$.pipe(
+  ofType(getAllTransactionsRequest.type),
+  mergeMap((action) =>
     from(getTransactions(action.payload)).pipe(
-      map(response => getAllTransactionsAction(response))
+      concatMap(transactions => of(
+        getAllTransactionsAction(transactions),
+        setFilteredTransactions(transactions.expenses)
+      ))
     )
   )
+)
+
+export const setFilteredByMonthEpic: Epic = (action$: Observable<PayloadAction<string>>) => action$.pipe(
+  ofType(setMonth.type),
+  map((action: PayloadAction<string>) => getAllTransactionsRequest(action.payload))
+)
+
+export const setFilterEpic: Epic = (action$: Observable<PayloadAction<TransactionType>>, state$: StateObservable<RootState>) => action$.pipe(
+  ofType(setType.type),
+  map((action) => setFilteredTransactions(state$.value.transactions.allTransactions[action.payload]))
 )

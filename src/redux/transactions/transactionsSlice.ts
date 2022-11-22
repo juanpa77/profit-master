@@ -1,6 +1,6 @@
-import { Action, createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { getTransactions } from "../../services/pouchDb";
-import { Transactions, transactionsState } from "./types";
+import { Transaction, Transactions, transactionsState } from "./types";
 
 const transactions: transactionsState = {
   loading: false,
@@ -23,15 +23,17 @@ const transactionsSlice = createSlice({
   reducers: {
     getAllTransactionsRequest: (state, action: PayloadAction<string>) => {
       state.loading = true
-
     },
     getAllTransactionsAction: (state, action: PayloadAction<Transactions>) => {
       state.allTransactions = action.payload;
       state.loading = false
+    },
+    setFilteredTransactions: (state, action: PayloadAction<Transaction[]>) => {
+      state.filteredTransactions = action.payload
     }
   },
 })
 
-export const { getAllTransactionsAction, getAllTransactionsRequest } = transactionsSlice.actions
+export const { getAllTransactionsAction, getAllTransactionsRequest, setFilteredTransactions } = transactionsSlice.actions
 
 export default transactionsSlice.reducer
