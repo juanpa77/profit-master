@@ -1,4 +1,4 @@
-import { startOfWeek, add, isWithinInterval, weeksToDays } from "date-fns"
+import { startOfWeek, add, isWithinInterval } from "date-fns"
 import { Transaction } from "../../global"
 import { formatDate, formatStringToDate, splitDate } from "../../utility/formatData"
 
@@ -10,10 +10,7 @@ export const filterTransactionPerDay = (transactions: Transaction[]) => {
 export const filterTransactionPerWeek = (transactions: Transaction[], weekNumber?: number) => {
   if (weekNumber) {
     const formatWeekNumber = weekNumber - 1
-    return transactions.filter(transactions => {
-      // console.log(transactions.week === formatWeekNumber)
-      return transactions.week === formatWeekNumber
-    })
+    return transactions.filter(transactions => transactions.week === formatWeekNumber)
   }
   return transactions.filter(transaction => isDayInCurrentWeek(transaction.date))
 }
@@ -27,3 +24,6 @@ export const isDayInCurrentWeek = (date: string | Date) => {
   }
   return isWithinInterval(formatDate, interval)
 }
+
+export const filterTransactionsByDay = (transactions: Transaction[], day: number) =>
+  transactions.filter(transactions => parseInt(splitDate(transactions.date).day) === day)
