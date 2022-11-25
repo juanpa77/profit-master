@@ -1,4 +1,5 @@
 import Link from "next/link"
+import { useRouter } from "next/router"
 import { ReactNode, useState } from "react"
 import ListIcon from "../../../assets/listIcon"
 import { TransactionIcon } from "../../../assets/transactionIcon"
@@ -28,7 +29,8 @@ const Layout = ({ children }: Props) => {
     },
   ]
 
-  const [selectedIcon, setSelectedIcon] = useState(icons[0])
+  const router = useRouter().asPath
+  const [selectedIcon, setSelectedIcon] = useState(icons.find(icon => icon.href === router))
 
   return (
     <Background>
@@ -48,7 +50,7 @@ const Layout = ({ children }: Props) => {
           >
             <Item
               onClick={() => setSelectedIcon(icon)}
-              isselected={selectedIcon.label === icon.label}>
+              isselected={selectedIcon?.label === icon.label}>
               {icon.icon()}
             </Item>
           </Link>
