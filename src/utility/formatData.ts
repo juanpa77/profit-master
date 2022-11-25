@@ -24,8 +24,8 @@ export const getNumberOfMonth = (month: string) => {
   const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
   const meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre']
   const result = months.indexOf(month)
-  if (result !== -1) return result
-  return meses.indexOf(month)
+  if (result !== -1) return result + 1
+  return meses.indexOf(month) + 1
 }
 
 export const formatNumberMonth = (month: number | string): string => {
@@ -47,3 +47,5 @@ export const formatNumber = (number: number) => {
     minimumFractionDigits: 0,
   }).format(number);
 };
+
+export const isCurrentMonth = (month: number) => new Date().getMonth() + 1 === month

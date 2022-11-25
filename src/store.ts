@@ -1,19 +1,35 @@
-import { configureStore } from '@reduxjs/toolkit'
+import { AnyAction, combineReducers, configureStore } from '@reduxjs/toolkit'
 import userReducer from './modules/user/userSlice'
+import transactionsReducer from './redux/transactions/transactionsSlice';
+import filterReducer from './redux/filters/filterSlice';
 import { createWrapper } from "next-redux-wrapper";
+import { combineEpics, createEpicMiddleware } from 'redux-observable';
+import { getTransactionsEpic, filterTransactionsByDateEpic, setFilterEpic } from './epic';
 
-// initial states here
-const initalState = {}
+const rootReducer = combineReducers({
+  user: userReducer,
+  transactions: transactionsReducer,
+  filters: filterReducer
+})
+export type MyState = ReturnType<typeof rootReducer>
+
+const epicMiddleware = createEpicMiddleware<AnyAction, AnyAction, MyState>()
 
 const store = configureStore({
-  reducer: {
-    user: userReducer,
-    // categoryReducer
+  reducer: rootReducer,
+  middleware(getDefaultMiddleware) {
+    return [
+      ...getDefaultMiddleware({ thunk: true, serializableCheck: true }),
+      epicMiddleware
+    ]
   },
-  devTools: true
+  devTools: true,
 })
 
+const rootEpic = combineEpics(getTransactionsEpic, setFilterEpic, filterTransactionsByDateEpic)
 const makeStore = () => store
+
+epicMiddleware.run(rootEpic)
 export type RootState = ReturnType<typeof store.getState>
 export type AppDispatch = typeof store.dispatch
 export const wrapper = createWrapper(makeStore)
