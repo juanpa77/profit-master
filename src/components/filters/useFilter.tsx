@@ -1,50 +1,38 @@
 import { useState, useEffect, useRef } from "react";
 import { Filter } from "../../modules/filters";
-import { sharingFilter } from "../../services/sharing-filter"
-import { getNumberOfMonth } from "../../utility/formatData";
+import { setDateFilter } from "../../redux/filters/filterSlice";
+import { useAppDispatch, useAppSelector } from "../../redux/useApp";
 
 type Props = {
   filter: Filter
 }
 
 const useFilter = ({ filter }: Props) => {
+  const scrollRef = useRef<HTMLDivElement>(null)
+  const dispatch = useAppDispatch()
+  const filterSelector = useAppSelector(state => state.filters)
+
   const [selectedFilter, setSelectedFilter] = useState(filter);
-  const [selectedDate, setSelectedDate] = useState(selectedFilter.dates![selectedFilter.currentDate]);
   const [show, setShow] = useState(true);
-  const scroll = useRef<HTMLDivElement>(null)
 
+  const selectedDate = filterSelector[selectedFilter.idName]
 
-  useEffect(() => setSelectedDate(selectedFilter.dates![selectedFilter.currentDate]), [selectedFilter.currentDate, selectedFilter.dates])
   useEffect(() => {
-    console.log('test')
-    setSelectedDate((selectedDate) =>
-      ((result) => {
-        const position = selectedFilter.dates!.indexOf(result) * 50
-        scroll.current?.scroll(position, 0)
-        return result
-      })(selectedFilter.dates![selectedFilter.currentDate])
-    )
-  }, [selectedFilter, setSelectedFilter])
+    const scrollPosition = selectedDate * 50
+    scrollRef.current?.scroll(scrollPosition, 0)
+  }, [selectedDate, selectedFilter])
 
   const handleFilterSelected = (filter: Filter) => {
     setSelectedFilter(filter)
     setShow(!show)
   }
 
-  const handleSelectedDate = (date: string) => {
-    const formateDate = selectedFilter.idName === 'month'
-      ? getNumberOfMonth(date).toString()
-      : date
-    setSelectedDate(date)
+  const handleSelectedDate = (date: number) => {
+    dispatch(setDateFilter({ name: selectedFilter.idName, value: date }))
     setShow(!show)
-
-    // sharingFilter.setSubject = {
-    //   name: selectedFilter.idName,
-    //   value: formateDate
-    // }
   }
 
-  return { selectedFilter, handleFilterSelected, handleSelectedDate, selectedDate, show, scroll }
+  return { selectedFilter, handleFilterSelected, handleSelectedDate, selectedDate, show, scrollRef }
 }
 
 export default useFilter

@@ -4,7 +4,7 @@ import transactionsReducer from './redux/transactions/transactionsSlice';
 import filterReducer from './redux/filters/filterSlice';
 import { createWrapper } from "next-redux-wrapper";
 import { combineEpics, createEpicMiddleware } from 'redux-observable';
-import { getTransactionsEpic, setFilteredByMonthEpic, setFilterEpic } from './epic';
+import { getTransactionsEpic, filterTransactionsByDateEpic, setFilterEpic } from './epic';
 
 const rootReducer = combineReducers({
   user: userReducer,
@@ -26,7 +26,7 @@ const store = configureStore({
   devTools: true,
 })
 
-const rootEpic = combineEpics(getTransactionsEpic, setFilteredByMonthEpic, setFilterEpic)
+const rootEpic = combineEpics(getTransactionsEpic, setFilterEpic, filterTransactionsByDateEpic)
 const makeStore = () => store
 
 epicMiddleware.run(rootEpic)
