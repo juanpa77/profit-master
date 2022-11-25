@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { Filter } from "../../modules/filters";
+import { Filter } from ".";
 import { setDateFilter } from "../../redux/filters/filterSlice";
 import { useAppDispatch, useAppSelector } from "../../redux/useApp";
 
@@ -20,7 +20,7 @@ const useFilter = ({ filter }: Props) => {
   useEffect(() => {
     const scrollPosition = selectedDate * 50
     scrollRef.current?.scroll(scrollPosition, 0)
-  }, [selectedDate, selectedFilter])
+  }, [selectedDate, selectedFilter, show])
 
   const handleFilterSelected = (filter: Filter) => {
     setSelectedFilter(filter)
@@ -32,7 +32,7 @@ const useFilter = ({ filter }: Props) => {
     setShow(!show)
   }
 
-  return { selectedFilter, handleFilterSelected, handleSelectedDate, selectedDate, show, scrollRef }
+  return { selectedFilter, handleFilterSelected, handleSelectedDate, selectedDate, show, scrollRef, setShow }
 }
 
 export default useFilter

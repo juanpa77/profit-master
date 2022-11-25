@@ -19,7 +19,7 @@ type Props = {
 // grid-template-rows: repeat(2, 1fr);
 // `
 
-export const Select = styled(motion.div)`
+export const SelectBox = styled(motion.div)`
 grid-row: 1/1;
 margin: 3px;
 padding: 10px 12px;
