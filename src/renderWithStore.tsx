@@ -5,12 +5,11 @@ import { render } from '@testing-library/react'
 
 import { RootState } from './store'
 import { JSXElementConstructor, ReactElement } from 'react'
-import userSlice from './modules/user/userSlice'
+import userSlice from './redux/user/userSlice'
 
 const testStore = (state: Partial<RootState>) => {
   return configureStore({
     reducer: userSlice,
-    // preloadedState: state
   })
 }
 

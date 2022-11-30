@@ -1,27 +1,19 @@
 import '../styles/globals.css'
 import type { AppProps } from 'next/app'
 import { Provider } from 'react-redux'
-import store, { wrapper } from '../store'
 import Layout from '../components/layout'
-import { useEffect } from 'react'
-import { getAllTransactionsRequest } from '../redux/transactions/transactionsSlice'
-import { useAppDispatch } from '../redux/useApp'
-import { formatNumberMonth } from '../utility/formatData'
-import { startOfWeek } from 'date-fns'
+import { FC } from 'react'
+import { wrapper } from '../store'
 
-function MyApp({ Component, pageProps }: AppProps) {
-  const currentDate = startOfWeek(new Date(), { weekStartsOn: 1 })
-  const currentMonth = formatNumberMonth(currentDate.getMonth())
-  const dispatch = useAppDispatch()
-  useEffect(() => { dispatch(getAllTransactionsRequest(currentMonth)) }, [currentMonth, dispatch])
-
+const MyApp: FC<AppProps> = ({ Component, ...rest }) => {
+  const { store, props } = wrapper.useWrappedStore(rest)
   return (
     <Provider store={store}>
       <Layout>
-        <Component {...pageProps} />
+        <Component {...props.pageProps} />
       </Layout>
     </Provider>
   )
 }
 
-export default wrapper.withRedux(MyApp)
+export default MyApp

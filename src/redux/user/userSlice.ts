@@ -23,16 +23,16 @@ const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    setActiveUser: (state, action: PayloadAction<User>) => {
-      state.loading = action.payload.loading
-      state.userInfo.name = action.payload.userInfo.name
-      state.userInfo.email = action.payload.userInfo.email
-      state.userToken = action.payload.userToken
+    setActiveUser: (state, action: PayloadAction<User | null>) => {
+      state.loading = action.payload!.loading
+      state.userInfo.name = action.payload!.userInfo.name
+      state.userInfo.email = action.payload!.userInfo.email
+      state.userToken = action.payload!.userToken
     },
     setLogOutUser: state => {
       state.userInfo.name = null
       state.userInfo.email = null
-    }
+    },
   },
   extraReducers: {}
 })

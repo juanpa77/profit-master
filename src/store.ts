@@ -1,10 +1,10 @@
 import { AnyAction, combineReducers, configureStore } from '@reduxjs/toolkit'
-import userReducer from './modules/user/userSlice'
+import userReducer from './redux/user/userSlice'
 import transactionsReducer from './redux/transactions/transactionsSlice';
 import filterReducer from './redux/filters/filterSlice';
 import { createWrapper } from "next-redux-wrapper";
 import { combineEpics, createEpicMiddleware } from 'redux-observable';
-import { getTransactionsEpic, filterTransactionsByDateEpic, setFilterEpic } from './epic';
+import { getTransactionsEpic, filterTransactionsByDateEpic, setFilterEpic, startAppEpic } from './epic';
 
 const rootReducer = combineReducers({
   user: userReducer,
@@ -26,7 +26,7 @@ const store = configureStore({
   devTools: true,
 })
 
-const rootEpic = combineEpics(getTransactionsEpic, setFilterEpic, filterTransactionsByDateEpic)
+const rootEpic = combineEpics(getTransactionsEpic, setFilterEpic, filterTransactionsByDateEpic, startAppEpic)
 const makeStore = () => store
 
 epicMiddleware.run(rootEpic)

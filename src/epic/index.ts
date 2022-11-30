@@ -8,6 +8,9 @@ import { setType, setDateFilter, FilterPayload } from '../redux/filters/filterSl
 import { getTransactions } from "../services/pouchDb"
 import { RootState } from '../store'
 import { filterTransactionPerWeek, filterTransactionsByDay } from '../services/filterTransactions/byDate'
+import { setActiveUser, User } from '../redux/user/userSlice'
+import { formatNumberMonth } from '../utility/formatData'
+import { startOfWeek } from 'date-fns'
 
 export const getTransactionsEpic: Epic = (action$: Observable<PayloadAction<string>>) => action$.pipe(
   ofType(getAllTransactionsRequest.type),
@@ -34,4 +37,11 @@ export const filterTransactionsByDateEpic: Epic = (action$: Observable<PayloadAc
 export const setFilterEpic: Epic = (action$: Observable<PayloadAction<TransactionType>>, state$: StateObservable<RootState>) => action$.pipe(
   ofType(setType.type),
   map((action) => setFilteredTransactions(state$.value.transactions.allTransactions[action.payload]))
+)
+const currentDate = startOfWeek(new Date(), { weekStartsOn: 1 })
+const currentMonth = formatNumberMonth(currentDate.getMonth())
+
+export const startAppEpic: Epic = (action$: Observable<PayloadAction<User>>) => action$.pipe(
+  ofType(setActiveUser.type),
+  map((action) => getAllTransactionsRequest(currentMonth))
 )

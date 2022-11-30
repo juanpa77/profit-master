@@ -34,14 +34,19 @@ const spring = {
 
 const DataFilters = ({ locale }: Props) => {
   const t = locale === 'en' ? en : es
-  const weeksOfMonth: Options = newArrayOfNumbers(getWeeksInMonth(new Date(), { weekStartsOn: 1 })).map(day => { return { label: day.toString(), value: day } })
-  const daysOfMonth: Options = newArrayOfNumbers(getDaysInMonth(new Date)).map(day => { return { label: day.toString(), value: day } })
-  const monthOfYear: Options = t.Months.map(month => { return { label: month, value: getNumberOfMonth(month) } })
+  const weeksOfMonth: Options = newArrayOfNumbers(getWeeksInMonth(new Date(), { weekStartsOn: 1 }))
+    .map(day => { return { label: day.toString(), value: day } })
+  const daysOfMonth: Options = newArrayOfNumbers(getDaysInMonth(new Date))
+    .map(day => { return { label: day.toString(), value: day } })
+  const monthOfYear: Options = t.Months
+    .map(month => { return { label: month, value: getNumberOfMonth(month) } })
+
   const FILTERS: Filter[] = [
     { idName: 'week', name: t.week, position: '1 / 2', dates: weeksOfMonth, currentDate: getWeekOfMonth(new Date(), { weekStartsOn: 1 }) - 1 },
     { idName: 'month', name: t.month, position: '2/3', dates: monthOfYear, currentDate: new Date().getMonth() },
     { idName: 'day', name: t.day, position: '3/4', dates: daysOfMonth, currentDate: new Date().getDate() - 1 }
   ]
+
   const {
     show,
     selectedDate,
