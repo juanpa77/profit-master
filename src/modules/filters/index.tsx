@@ -11,6 +11,7 @@ import OptionsList from "../../components/filters/Options"
 import { Options } from "../../components/filters/Options"
 import { getNumberOfMonth } from "../../utility/formatData"
 import SelectedFilter from "./selectedFilter"
+import { useAppSelector } from "../../redux/useApp"
 
 type Props = {
   locale: string | undefined
@@ -46,7 +47,8 @@ const DataFilters = ({ locale }: Props) => {
     { idName: 'month', name: t.month, position: '2/3', dates: monthOfYear, currentDate: new Date().getMonth() },
     { idName: 'day', name: t.day, position: '3/4', dates: daysOfMonth, currentDate: new Date().getDate() - 1 }
   ]
-
+  const selector = useAppSelector(state => state.filters)
+  console.log(FILTERS[1].dates[selector.month - 1].label)
   const {
     show,
     selectedDate,
@@ -80,7 +82,7 @@ const DataFilters = ({ locale }: Props) => {
           />
           : <SelectedFilter
             handleClick={() => setShow(true)}
-            month={FILTERS[1].dates[FILTERS[1].currentDate].label}
+            month={FILTERS[1].dates[selector.month - 1].label}
             nameFilter={selectedFilter.name}
             selectedDate={selectedDate}
           />
