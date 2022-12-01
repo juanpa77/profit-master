@@ -9,7 +9,6 @@ export const Background = styled('div')`
   min-width: 360px;
   height: 100vh;
   background: #2e3148;
-  gap: 8px;
 `
 export const NavBar = styled(motion.nav)`
   display: flex;
@@ -35,5 +34,5 @@ display: flex;
 flex-direction: column;
 align-items: center;
 justify-content: space-around;
-height: 100%;
+height: 92%;
 `
